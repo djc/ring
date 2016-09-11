@@ -82,6 +82,10 @@ typedef struct bn_blinding_st BN_BLINDING;
  * also the size of a signature or encrypted value using |rsa|. */
 OPENSSL_EXPORT size_t GFp_RSA_modulus_size(const RSA *rsa);
 
+/* GFp_RSA_public_exponent_size returns the number of bytes in the public
+ * exponent. */
+OPENSSL_EXPORT size_t GFp_RSA_public_exponent_size(const RSA *rsa);
+
 
 /* Private functions. */
 

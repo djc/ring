@@ -141,6 +141,11 @@ impl RSAKeyPair {
     pub fn public_modulus_len(&self) -> usize {
         unsafe { GFp_RSA_modulus_size(&self.rsa) }
     }
+
+    /// Returns the length in bytes of the key pair's public exponent.
+    pub fn public_exponent_len(&self) -> usize {
+        unsafe { GFp_RSA_exponent_size(&self.rsa) }
+    }
 }
 
 impl Drop for RSAKeyPair {
@@ -289,6 +294,7 @@ extern {
     fn GFp_rsa_new_end(rsa: *mut RSA, n: &BIGNUM, d: &BIGNUM, p: &BIGNUM,
                        q: &BIGNUM) -> c::int;
     fn GFp_RSA_modulus_size(rsa: *const RSA) -> c::size_t;
+    fn GFp_RSA_public_exponent_size(rsa: *const RSA) -> c::size_t;
 }
 
 #[allow(improper_ctypes)]
@@ -424,6 +430,15 @@ mod tests {
 
             assert_eq!(counter, (prev_counter + 1) % blinding_counter);
         }
+    }
+
+    #[test]
+    fn test_rsa_public_exponent_len() {
+        const PRIVATE_KEY_DER: &'static [u8] =
+            include_bytes!("signature_rsa_example_private_key.der");
+        let key_bytes_der = untrusted::Input::from(PRIVATE_KEY_DER);
+        let key_pair = RSAKeyPair::from_der(key_bytes_der).unwrap();
+        assert_eq!(key_pair.public_exponent_len(), 3);
     }
 
     // In `crypto/rsa/blinding.c`, when `bn_blinding_create_param` fails to

@@ -130,6 +130,10 @@ size_t GFp_RSA_modulus_size(const RSA *rsa) {
   return GFp_BN_num_bytes(&rsa->mont_n->N);
 }
 
+size_t GFp_RSA_public_exponent_size(const RSA *rsa) {
+  return GFp_BN_num_bytes(*&rsa->e);
+}
+
 
 /* GFp_rsa_public_decrypt decrypts the RSA signature |in| using the public key
  * with modulus |public_key_n| and exponent |public_key_e|, leaving the
