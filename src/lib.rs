@@ -40,6 +40,7 @@
     missing_copy_implementations,
     missing_debug_implementations,
 )]
+// Bring back `unused_unsafe` and `warnings` when Rust 1.13 goes stable.
 #![deny(
     const_err,
     dead_code,
@@ -82,10 +83,8 @@
     unused_parens,
     unused_qualifications,
     unused_results,
-    unused_unsafe,
     unused_variables,
     variant_size_differences,
-    warnings,
     while_true,
 )]
 
