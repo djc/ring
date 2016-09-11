@@ -139,7 +139,7 @@ impl RSAKeyPair {
     ///
     /// A signature has the same length as the public modulus.
     pub fn public_modulus_len(&self) -> usize {
-        unsafe { GFp_RSA_size(&self.rsa) }
+        unsafe { GFp_RSA_modulus_size(&self.rsa) }
     }
 }
 
@@ -288,7 +288,7 @@ extern {
     fn GFp_BN_BLINDING_free(b: *mut BN_BLINDING);
     fn GFp_rsa_new_end(rsa: *mut RSA, n: &BIGNUM, d: &BIGNUM, p: &BIGNUM,
                        q: &BIGNUM) -> c::int;
-    fn GFp_RSA_size(rsa: *const RSA) -> c::size_t;
+    fn GFp_RSA_modulus_size(rsa: *const RSA) -> c::size_t;
 }
 
 #[allow(improper_ctypes)]
